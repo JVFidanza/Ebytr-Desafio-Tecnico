@@ -1,27 +1,27 @@
-const { findAll,
-  create,
-  remove,
-  findByTaskName,
+const { findAllModel,
+  createTaskModel,
+  removeTaskModel,
+  findByTaskNameModel,
   updateTaskModel, 
   updateStatusModel } = require('../models/tasksModel');
 
-const getAll = async () => findAll();
+const findAllService = async () => findAllModel();
 
-const createTask = async ({ task, status }) => create({ task, status });
+const createTaskService = async ({ task, status }) => createTaskModel({ task, status });
 
-const removeTask = async (task) => remove(task);
+const removeTaskService = async (task) => removeTaskModel(task);
 
-const getByTaskName = async (task) => findByTaskName(task);
+const findByTaskNameService = async (task) => findByTaskNameModel(task);
 
 const updateTaskService = async ({ task, newTask }) => updateTaskModel({ task, newTask });
 
 const updateStatusService = async ({ task, newStatus }) => updateStatusModel({ task, newStatus });
 
 module.exports = {
-  getAll,
-  createTask,
-  removeTask,
-  getByTaskName,
+  findAllService,
+  createTaskService,
+  removeTaskService,
+  findByTaskNameService,
   updateTaskService,
   updateStatusService,
 };

@@ -1,7 +1,7 @@
-const { getAll,
-  createTask,
-  removeTask,
-  getByTaskName,
+const { findAllService,
+  createTaskService,
+  removeTaskService,
+  findByTaskNameService,
   updateTaskService, 
   updateStatusService } = require('../services/tasksService');
 
@@ -14,39 +14,39 @@ const error500 = 'Erro inesperado';
 const invalidTask = 'Tarefa inválida';
 const inexistentTask = 'Tarefa inexistente';
 
-const getAllTasks = async (_req, res) => {
+const findAllController = async (_req, res) => {
   try {
-    const result = await getAll();
+    const result = await findAllService();
     return res.status(status200).json(result);
   } catch (err) {
     return res.status(status500).json({ message: error500, errorMessage: err.message });
   }
 };
 
-const insertTask = async (req, res) => {
+const createTaskController = async (req, res) => {
   const { task, status } = req.body;
   if (!task || !status) {
     return res.status(status400).json({ message: invalidTask });
   }
   try {
-    await createTask({ task, status });
+    await createTaskService({ task, status });
     return res.status(status200).json({ message: 'Tarefa criada com sucesso!' });
   } catch (err) {
     return res.status(status500).json({ message: error500, errorMessage: err.message });
   }
 };
 
-const deleteTask = async (req, res) => {
+const removeTaskController = async (req, res) => {
   const { task } = req.body;
   if (!task) {
     return res.status(status400).json({ message: invalidTask });
   }
   try {
-    const dbTask = await getByTaskName(task);
+    const dbTask = await findByTaskNameService(task);
     if (!dbTask) {
       return res.status(status404).json({ message: inexistentTask });
     }
-    await removeTask(task);
+    await removeTaskService(task);
     return res.status(status200).json({ message: 'Tarefa removida com sucesso!' });
   } catch (err) {
     return res.status(status500).json({ message: error500, errorMessage: err.message });
@@ -58,7 +58,7 @@ const updateTaskController = async (req, res) => {
   if (!task || !newTask) {
     return res.status(status400).json({ message: invalidTask });
   }
-  const dbTask = await getByTaskName(task);
+  const dbTask = await findByTaskNameService(task);
     if (!dbTask) {
       return res.status(status404).json({ message: inexistentTask });
     }
@@ -78,7 +78,7 @@ const updateStatusController = async (req, res) => {
   if (!newStatus) {
     return res.status(status400).json({ message: 'Status inválido' });
   }
-  const dbTask = await getByTaskName(task);
+  const dbTask = await findByTaskNameService(task);
     if (!dbTask) {
       return res.status(status404).json({ message: inexistentTask });
     }
@@ -97,9 +97,9 @@ const updateStatusController = async (req, res) => {
 // };
 
 module.exports = {
-  getAllTasks,
-  insertTask,
-  deleteTask,
+  findAllController,
+  createTaskController,
+  removeTaskController,
   updateTaskController,
   updateStatusController,
 };

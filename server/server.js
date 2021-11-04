@@ -1,8 +1,8 @@
 const express = require('express');
 const cors = require('cors');
-const { getAllTasks,
-  insertTask,
-  deleteTask, 
+const { findAllController,
+  createTaskController,
+  removeTaskController, 
   updateTaskController, 
   updateStatusController } = require('./controllers/tasksController');
 
@@ -13,11 +13,11 @@ const port = process.env.PORT || 5000;
 app.use(cors());
 app.use(express.json());
 // app.use(require("./routes/record"));
-app.get('/tasks', getAllTasks);
+app.get('/tasks', findAllController);
 
-app.post('/tasks', insertTask);
+app.post('/tasks', createTaskController);
 
-app.delete('/tasks', deleteTask);
+app.delete('/tasks', removeTaskController);
 
 app.put('/tasks/task', updateTaskController);
 
