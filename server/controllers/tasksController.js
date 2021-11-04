@@ -1,4 +1,8 @@
-const { getAll, createTask, removeTask, getByTaskName } = require('../services/tasksService');
+const { getAll,
+  createTask,
+  removeTask,
+  getByTaskName,
+  updateTaskService } = require('../services/tasksService');
 
 const status200 = 200;
 const status500 = 500;
@@ -13,7 +17,7 @@ const getAllTasks = async (_req, res) => {
     const result = await getAll();
     return res.status(status200).json(result);
   } catch (err) {
-    return res.status(status500).json({ message: error500, err });
+    return res.status(status500).json({ message: error500, errorMessage: err.message });
   }
 };
 
@@ -26,7 +30,7 @@ const insertTask = async (req, res) => {
     await createTask({ task, status });
     return res.status(status200).json({ message: 'Tarefa criada com sucesso!' });
   } catch (err) {
-    return res.status(status500).json({ message: error500, err });
+    return res.status(status500).json({ message: error500, errorMessage: err.message });
   }
 };
 
@@ -43,10 +47,26 @@ const deleteTask = async (req, res) => {
     await removeTask(task);
     return res.status(status200).json({ message: 'Tarefa removida com sucesso!' });
   } catch (err) {
-    return res.status(status500).json({ message: error500, err });
+    return res.status(status500).json({ message: error500, errorMessage: err.message });
   }
 };
 
+const updateTaskController = async (req, res) => {
+  const { task, newTask } = req.body;
+  if (!task || !newTask) {
+    return res.status(status400).json({ message: invalidTask });
+  }
+  const dbTask = await getByTaskName(task);
+    if (!dbTask) {
+      return res.status(status404).json({ message: 'Tarefa inexistente' });
+    }
+  try {
+  await updateTaskService({ task, newTask });
+  return res.status(status200).json({ message: 'Tarefa atualizada com sucesso!' }); 
+  } catch (err) {
+    return res.status(status500).json({ message: error500, errorMessage: err.message });
+  }
+};
 // const getTaskByName = async (req, res) => {
 //   const { task } = req.body;
 //   if (!task) {
@@ -58,4 +78,5 @@ module.exports = {
   getAllTasks,
   insertTask,
   deleteTask,
+  updateTaskController,
 };

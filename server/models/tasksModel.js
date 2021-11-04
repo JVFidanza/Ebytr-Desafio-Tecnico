@@ -24,9 +24,15 @@ const findByTaskName = async (task) => {
   return result;
 };
 
+const updateTaskModel = async ({ task, newTask }) => {
+  const db = await connection();
+  return db.collection('tarefas').updateOne({ tarefa: task }, { $set: { tarefa: newTask } });
+};
+
 module.exports = {
   findAll,
   create,
   remove,
   findByTaskName,
+  updateTaskModel,
 };
