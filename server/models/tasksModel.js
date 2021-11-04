@@ -18,8 +18,15 @@ const remove = async (task) => {
   return result;
 };
 
+const findByTaskName = async (task) => {
+  const db = await connection();
+  const result = await db.collection('tarefas').findOne({ tarefa: task });
+  return result;
+};
+
 module.exports = {
   findAll,
   create,
   remove,
+  findByTaskName,
 };
