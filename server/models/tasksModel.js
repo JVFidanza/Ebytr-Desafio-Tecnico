@@ -29,10 +29,16 @@ const updateTaskModel = async ({ task, newTask }) => {
   return db.collection('tarefas').updateOne({ tarefa: task }, { $set: { tarefa: newTask } });
 };
 
+const updateStatusModel = async ({ task, newStatus }) => {
+  const db = await connection();
+  return db.collection('tarefas').updateOne({ tarefa: task }, { $set: { status: newStatus } });
+};
+
 module.exports = {
   findAll,
   create,
   remove,
   findByTaskName,
   updateTaskModel,
+  updateStatusModel,
 };
