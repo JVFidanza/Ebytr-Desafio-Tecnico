@@ -12,7 +12,14 @@ const create = async ({ task, status }) => {
   return result;
 };
 
+const remove = async (task) => {
+  const db = await connection();
+  const result = await db.collection('tarefas').deleteOne({ tarefa: task });
+  return result;
+};
+
 module.exports = {
   findAll,
   create,
+  remove,
 };

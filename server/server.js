@@ -1,6 +1,6 @@
 const express = require('express');
 const cors = require('cors');
-const { getAllTasks, insertTask } = require('./controllers/tasksController');
+const { getAllTasks, insertTask, deleteTask } = require('./controllers/tasksController');
 
 const app = express();
 require('dotenv').config();
@@ -12,6 +12,8 @@ app.use(express.json());
 app.get('/tasks', getAllTasks);
 
 app.post('/tasks', insertTask);
+
+app.delete('/tasks', deleteTask);
  
 app.listen(port, () => {
   console.log(`Server is running on port: ${port}`);
