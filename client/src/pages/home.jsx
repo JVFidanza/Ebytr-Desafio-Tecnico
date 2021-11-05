@@ -19,8 +19,24 @@ function Home() {
 
   const onChange = (element, setState) => {
     setState(element.target.value);
-    console.log(taskInput, statusSelect);
   };
+
+  const sendTask = () => {
+    const requestOptions = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ task: taskInput, status: statusSelect }),
+    };
+    console.log(requestOptions.body);
+    fetch('http://localhost:5000/tasks', requestOptions)
+      .then((response) => console.log(response.json()))
+      .then(() => {
+        setStatusSelect('Pendente');
+        setTaskInput('');
+      });
+    window.location.reload(false);
+  };
+
   return (
     <div>
       <h1>To Do List</h1>
@@ -40,7 +56,7 @@ function Home() {
           <option>Em Andamento</option>
           <option>Pronta</option>
         </select>
-        <button type="button">Cadastrar</button>
+        <button type="button" onClick={ () => sendTask() }>Cadastrar</button>
       </form>
       <h3>Tarefas:</h3>
       {isLoading ? (<p>Carregando...</p>) : (
