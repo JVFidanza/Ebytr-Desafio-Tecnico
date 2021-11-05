@@ -4,6 +4,9 @@ import Task from '../components/task';
 function Home() {
   const [isLoading, setIsLoading] = useState(false);
   const [tasks, setTasks] = useState([]);
+  const [statusSelect, setStatusSelect] = useState('Pendente');
+  const [taskInput, setTaskInput] = useState('');
+
   useEffect(() => {
     setIsLoading(true);
     fetch('http://localhost:5000/tasks')
@@ -14,14 +17,25 @@ function Home() {
       });
   }, []);
 
+  const onChange = (element, setState) => {
+    setState(element.target.value);
+    console.log(taskInput, statusSelect);
+  };
   return (
     <div>
       <h1>To Do List</h1>
       <form id="new-task">
         <h4>Nova tarefa:</h4>
-        <input type="text" placeholder="Digite nova tarefa" />
+        <input
+          type="text"
+          placeholder="Digite nova tarefa"
+          onChange={ (e) => onChange(e, setTaskInput) }
+        />
         <h4>Status:</h4>
-        <select name="status" placeholder="Status">
+        <select
+          name="status"
+          onChange={ (e) => onChange(e, setStatusSelect) }
+        >
           <option>Pendente</option>
           <option>Em Andamento</option>
           <option>Pronta</option>
