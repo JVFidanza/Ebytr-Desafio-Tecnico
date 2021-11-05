@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import Task from '../components/task';
 
 function Home() {
   const [isLoading, setIsLoading] = useState(false);
@@ -18,8 +19,11 @@ function Home() {
       <h3>Tarefas</h3>
       {isLoading ? (<p>Carregando...</p>) : (
         <ul>
-          {tasks.map((task, index) => (
-            <li key={ index }>{`${task.tarefa} Status: ${task.status}`}</li>))}
+          {tasks.map(({ tarefa, status, _id }) => (<Task
+            tarefa={ tarefa }
+            status={ status }
+            key={ _id }
+          />))}
         </ul>
       )}
     </div>
