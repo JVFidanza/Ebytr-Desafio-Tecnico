@@ -16,7 +16,19 @@ function Home() {
 
   return (
     <div>
-      <h3>Tarefas</h3>
+      <h1>To Do List</h1>
+      <form id="new-task">
+        <h4>Nova tarefa:</h4>
+        <input type="text" placeholder="Digite nova tarefa" />
+        <h4>Status:</h4>
+        <select name="status" placeholder="Status">
+          <option>Pendente</option>
+          <option>Em Andamento</option>
+          <option>Pronta</option>
+        </select>
+        <button type="button">Cadastrar</button>
+      </form>
+      <h3>Tarefas:</h3>
       {isLoading ? (<p>Carregando...</p>) : (
         <ul>
           {tasks.map(({ tarefa, status, _id }) => (<Task
