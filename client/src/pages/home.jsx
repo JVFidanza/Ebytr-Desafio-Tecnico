@@ -27,7 +27,6 @@ function Home() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ task: taskInput, status: statusSelect }),
     };
-    console.log(requestOptions.body);
     fetch('http://localhost:5000/tasks', requestOptions)
       .then((response) => console.log(response.json()))
       .then(() => {
@@ -41,21 +40,26 @@ function Home() {
     <div>
       <h1>To Do List</h1>
       <form id="new-task">
-        <h4>Nova tarefa:</h4>
-        <input
-          type="text"
-          placeholder="Digite nova tarefa"
-          onChange={ (e) => onChange(e, setTaskInput) }
-        />
-        <h4>Status:</h4>
-        <select
-          name="status"
-          onChange={ (e) => onChange(e, setStatusSelect) }
-        >
-          <option>Pendente</option>
-          <option>Em Andamento</option>
-          <option>Pronta</option>
-        </select>
+        <label htmlFor="status">
+          Nova Tarefa:
+          <input
+            type="text"
+            id="task"
+            placeholder="Digite nova tarefa"
+            onChange={ (e) => onChange(e, setTaskInput) }
+          />
+        </label>
+        <label htmlFor="status">
+          Status:
+          <select
+            id="status"
+            onChange={ (e) => onChange(e, setStatusSelect) }
+          >
+            <option>Pendente</option>
+            <option>Em Andamento</option>
+            <option>Pronta</option>
+          </select>
+        </label>
         <button type="button" onClick={ () => sendTask() }>Cadastrar</button>
       </form>
       <h3>Tarefas:</h3>
